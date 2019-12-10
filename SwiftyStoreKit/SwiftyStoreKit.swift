@@ -154,6 +154,7 @@ extension SwiftyStoreKit {
      *  - Parameter quantity: quantity of the product to be purchased
      *  - Parameter atomically: whether the product is purchased atomically (e.g. finishTransaction is called immediately)
      *  - Parameter applicationUsername: an opaque identifier for the user’s account on your system
+     *  - Parameter paymentDiscount: optional discount to be applied. Must be SKProductPayment type
      *  - Parameter completion: handler for result
      */
     public class func purchaseProduct(_ productId: String, quantity: Int = 1, atomically: Bool = true, applicationUsername: String = "", simulatesAskToBuyInSandbox: Bool = false, paymentDiscount: PaymentDiscount? = nil, completion: @escaping (PurchaseResult) -> Void) {
@@ -167,7 +168,7 @@ extension SwiftyStoreKit {
      *  - Parameter quantity: quantity of the product to be purchased
      *  - Parameter atomically: whether the product is purchased atomically (e.g. finishTransaction is called immediately)
      *  - Parameter applicationUsername: an opaque identifier for the user’s account on your system
-     *  - Parameter product: optional discount to be applied. Must be SKProductPayment type
+     *  - Parameter paymentDiscount: optional discount to be applied. Must be SKProductPayment type
      *  - Parameter completion: handler for result
      */
     public class func purchaseProduct(_ product: SKProduct, quantity: Int = 1, atomically: Bool = true, applicationUsername: String = "", simulatesAskToBuyInSandbox: Bool = false, paymentDiscount: PaymentDiscount? = nil, completion: @escaping ( PurchaseResult) -> Void) {
