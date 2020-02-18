@@ -25,6 +25,7 @@
 import Foundation
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 struct Payment: Hashable {
     let product: SKProduct
     
@@ -48,6 +49,7 @@ struct Payment: Hashable {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 public struct PaymentDiscount {
     let discount: AnyObject?
     
@@ -61,6 +63,7 @@ public struct PaymentDiscount {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class PaymentsController: TransactionController {
 
     private var payments: [Payment] = []
@@ -118,11 +121,11 @@ class PaymentsController: TransactionController {
         return false
     }
 
-    func transactionError(for error: NSError?) -> SKError {
+    func transactionError(for error: NSError?) -> SwiftySKError {
         let message = "Unknown error"
-        let altError = NSError(domain: SKErrorDomain, code: SKError.unknown.rawValue, userInfo: [ NSLocalizedDescriptionKey: message ])
+        let altError = NSError(domain: SKErrorDomain, code: SwiftySKErrorCode.unknown.rawValue, userInfo: [ NSLocalizedDescriptionKey: message ])
         let nsError = error ?? altError
-        return SKError(_nsError: nsError)
+        return SwiftySKError(_nsError: nsError)
     }
 
     func processTransactions(_ transactions: [SKPaymentTransaction], on paymentQueue: PaymentQueue) -> [SKPaymentTransaction] {

@@ -25,6 +25,7 @@
 import Foundation
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 struct RestorePurchases {
     let atomically: Bool
     let applicationUsername: String?
@@ -37,6 +38,7 @@ struct RestorePurchases {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class RestorePurchasesController: TransactionController {
 
     public var restorePurchases: RestorePurchases?
@@ -84,7 +86,7 @@ class RestorePurchasesController: TransactionController {
             print("Callback already called. Returning")
             return
         }
-        restoredPurchases.append(.failed(error: SKError(_nsError: error as NSError)))
+        restoredPurchases.append(.failed(error: SwiftySKError(_nsError: error as NSError)))
         restorePurchases.callback(restoredPurchases)
 
         // Reset state after error received

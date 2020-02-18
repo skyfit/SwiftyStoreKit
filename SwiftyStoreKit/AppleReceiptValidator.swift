@@ -27,6 +27,7 @@ import Foundation
 
 // https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html
 
+@available(iOS 8, watchOS 6.2, *)
 public struct AppleReceiptValidator: ReceiptValidator {
 
 	public enum VerifyReceiptURLType: String {

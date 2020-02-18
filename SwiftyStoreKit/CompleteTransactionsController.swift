@@ -25,6 +25,7 @@
 import Foundation
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 struct CompleteTransactions {
     let atomically: Bool
     let callback: ([Purchase]) -> Void
@@ -35,6 +36,7 @@ struct CompleteTransactions {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class CompleteTransactionsController: TransactionController {
 
     var completeTransactions: CompleteTransactions?

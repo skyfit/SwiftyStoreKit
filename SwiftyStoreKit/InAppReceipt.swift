@@ -35,6 +35,7 @@ extension Date {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 extension ReceiptItem {
 
     public init?(receiptInfo: ReceiptInfo) {
@@ -83,6 +84,7 @@ extension ReceiptItem {
 }
 
 // MARK: - receipt mangement
+@available(iOS 8, watchOS 6.2, *)
 internal class InAppReceipt {
 
     /**

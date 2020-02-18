@@ -25,6 +25,7 @@
 
 import Foundation
 
+@available(iOS 8, watchOS 6.2, *)
 class InAppReceiptVerificator: NSObject {
 
     let appStoreReceiptURL: URL?

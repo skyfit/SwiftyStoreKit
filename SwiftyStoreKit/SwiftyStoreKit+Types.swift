@@ -27,6 +27,7 @@ import StoreKit
 // MARK: Purchases
 
 // Restored product
+@available(iOS 8, watchOS 6.2, *)
 public struct Purchase {
     public let productId: String
     public let quantity: Int
@@ -36,6 +37,7 @@ public struct Purchase {
 }
 
 // Purchased product
+@available(iOS 8, watchOS 6.2, *)
 public struct PurchaseDetails {
     public let productId: String
     public let quantity: Int
@@ -46,11 +48,13 @@ public struct PurchaseDetails {
 }
 
 //Conform to this protocol to provide custom receipt validator
+@available(iOS 8, watchOS 6.2, *)
 public protocol ReceiptValidator {
 	func validate(receiptData: Data, completion: @escaping (VerifyReceiptResult) -> Void)
 }
 
 // Payment transaction
+@available(iOS 8, watchOS 6.2, *)
 public protocol PaymentTransaction {
     var transactionDate: Date? { get }
     var transactionState: SKPaymentTransactionState { get }
@@ -59,9 +63,11 @@ public protocol PaymentTransaction {
 }
 
 // Add PaymentTransaction conformance to SKPaymentTransaction
+@available(iOS 8, watchOS 6.2, *)
 extension SKPaymentTransaction: PaymentTransaction { }
 
 // Products information
+@available(iOS 8, watchOS 6.2, *)
 public struct RetrieveResults {
     public let retrievedProducts: Set<SKProduct>
     public let invalidProductIDs: Set<String>
@@ -69,18 +75,23 @@ public struct RetrieveResults {
 }
 
 // Purchase result
+@available(iOS 8, watchOS 6.2, *)
 public enum PurchaseResult {
     case success(purchase: PurchaseDetails)
-    case error(error: SKError)
+    case error(error: SwiftySKError)
 }
 
 // Restore purchase results
+@available(iOS 8, watchOS 6.2, *)
 public struct RestoreResults {
     public let restoredPurchases: [Purchase]
-    public let restoreFailedPurchases: [(SKError, String?)]
+    public let restoreFailedPurchases: [(SwiftySKError, String?)]
 }
 
+@available(iOS 8, watchOS 6.2, *)
 public typealias ShouldAddStorePaymentHandler = (_ payment: SKPayment, _ product: SKProduct) -> Bool
+
+@available(iOS 8, watchOS 6.2, *)
 public typealias UpdatedDownloadsHandler = (_ downloads: [SKDownload]) -> Void
 
 // MARK: Receipt verification

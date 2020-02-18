@@ -25,6 +25,7 @@
 
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 public extension SKProduct {
 
     var localizedPrice: String? {

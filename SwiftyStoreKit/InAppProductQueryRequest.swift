@@ -24,6 +24,7 @@
 
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 typealias InAppProductRequestCallback = (RetrieveResults) -> Void
 
 protocol InAppProductRequest: class {
@@ -31,6 +32,7 @@ protocol InAppProductRequest: class {
     func cancel()
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class InAppProductQueryRequest: NSObject, InAppProductRequest, SKProductsRequestDelegate {
 
     private let callback: InAppProductRequestCallback

@@ -25,6 +25,7 @@
 import Foundation
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 protocol TransactionController {
 
     /**
@@ -35,12 +36,14 @@ protocol TransactionController {
     func processTransactions(_ transactions: [SKPaymentTransaction], on paymentQueue: PaymentQueue) -> [SKPaymentTransaction]
 }
 
+@available(iOS 8, watchOS 6.2, *)
 public enum TransactionResult {
     case purchased(purchase: PurchaseDetails)
     case restored(purchase: Purchase)
-    case failed(error: SKError)
+    case failed(error: SwiftySKError)
 }
 
+@available(iOS 8, watchOS 6.2, *)
 public protocol PaymentQueue: class {
 
     func add(_ observer: SKPaymentTransactionObserver)
@@ -58,16 +61,26 @@ public protocol PaymentQueue: class {
     func finishTransaction(_ transaction: SKPaymentTransaction)
 }
 
-extension SKPaymentQueue: PaymentQueue { }
-
-extension SKPaymentTransaction {
-
-    open override var debugDescription: String {
-        let transactionId = transactionIdentifier ?? "null"
-        return "productId: \(payment.productIdentifier), transactionId: \(transactionId), state: \(transactionState), date: \(String(describing: transactionDate))"
+@available(iOS 8, watchOS 6.2, *)
+extension SKPaymentQueue: PaymentQueue {
+    #if os(watchOS)
+    @available(watchOS 6.2, *)
+    public func resume(_ downloads: [SKDownload]) {
+        resumeDownloads(downloads)
     }
+    #endif
 }
 
+@available(iOS 8, watchOS 6.2, *)
+extension SKPaymentTransaction {
+
+//    open override var debugDescription: String {
+//        let transactionId = transactionIdentifier ?? "null"
+//        return "productId: \(payment.productIdentifier), transactionId: \(transactionId), state: \(transactionState), date: \(String(describing: transactionDate))"
+//    }
+}
+
+@available(iOS 8, watchOS 6.2, *)
 extension SKPaymentTransactionState: CustomDebugStringConvertible {
 
     public var debugDescription: String {
@@ -83,6 +96,7 @@ extension SKPaymentTransactionState: CustomDebugStringConvertible {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class PaymentQueueController: NSObject, SKPaymentTransactionObserver {
 
     private let paymentsController: PaymentsController

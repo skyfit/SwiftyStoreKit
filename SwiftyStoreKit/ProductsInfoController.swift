@@ -25,10 +25,12 @@
 import Foundation
 import StoreKit
 
+@available(iOS 8, watchOS 6.2, *)
 protocol InAppProductRequestBuilder: class {
     func request(productIds: Set<String>, callback: @escaping InAppProductRequestCallback) -> InAppProductRequest
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class InAppProductQueryRequestBuilder: InAppProductRequestBuilder {
     
     func request(productIds: Set<String>, callback: @escaping InAppProductRequestCallback) -> InAppProductRequest {
@@ -36,6 +38,7 @@ class InAppProductQueryRequestBuilder: InAppProductRequestBuilder {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 class ProductsInfoController: NSObject {
 
     struct InAppProductQuery {

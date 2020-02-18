@@ -24,6 +24,25 @@
 
 import StoreKit
 
+#if os(watchOS)
+@available(watchOS 6.2, *)
+typealias SwiftySKErrorCode = SKErrorCode
+#endif
+
+#if os(iOS)
+@available(iOS 8, *)
+typealias SwiftySKErrorCode = SKError.Code
+#endif
+
+public struct SwiftySKError: Error {
+    public let error: NSError
+    
+    public init(_nsError error: NSError) {
+        self.error = error
+    }
+}
+
+@available(iOS 8, watchOS 6.2, *)
 public class SwiftyStoreKit {
 
     private let productsInfoController: ProductsInfoController
@@ -52,14 +71,14 @@ public class SwiftyStoreKit {
             if let product = result.retrievedProducts.first {
                 self.purchase(product: product, quantity: quantity, atomically: atomically, applicationUsername: applicationUsername, simulatesAskToBuyInSandbox: simulatesAskToBuyInSandbox, paymentDiscount: paymentDiscount, completion: completion)
             } else if let error = result.error {
-                completion(.error(error: SKError(_nsError: error as NSError)))
+                completion(.error(error: SwiftySKError(_nsError: error as NSError)))
             } else if let invalidProductId = result.invalidProductIDs.first {
                 let userInfo = [ NSLocalizedDescriptionKey: "Invalid product id: \(invalidProductId)" ]
-                let error = NSError(domain: SKErrorDomain, code: SKError.paymentInvalid.rawValue, userInfo: userInfo)
-                completion(.error(error: SKError(_nsError: error)))
+                let error = NSError(domain: SKErrorDomain, code: SwiftySKErrorCode.paymentInvalid.rawValue, userInfo: userInfo)
+                completion(.error(error: SwiftySKError(_nsError: error)))
             } else {
-                let error = NSError(domain: SKErrorDomain, code: SKError.unknown.rawValue, userInfo: nil)
-                completion(.error(error: SKError(_nsError: error)))
+                let error = NSError(domain: SKErrorDomain, code: SwiftySKErrorCode.unknown.rawValue, userInfo: nil)
+                completion(.error(error: SwiftySKError(_nsError: error)))
             }
         }
     }
@@ -103,7 +122,7 @@ public class SwiftyStoreKit {
 
     private func processRestoreResults(_ results: [TransactionResult]) -> RestoreResults {
         var restoredPurchases: [Purchase] = []
-        var restoreFailedPurchases: [(SKError, String?)] = []
+        var restoreFailedPurchases: [(SwiftySKError, String?)] = []
         for result in results {
             switch result {
             case .purchased(let purchase):
@@ -118,12 +137,13 @@ public class SwiftyStoreKit {
         return RestoreResults(restoredPurchases: restoredPurchases, restoreFailedPurchases: restoreFailedPurchases)
     }
 
-    private func storeInternalError(code: SKError.Code = SKError.unknown, description: String = "") -> SKError {
+    private func storeInternalError(code: SwiftySKErrorCode = SwiftySKErrorCode.unknown, description: String = "") -> SwiftySKError {
         let error = NSError(domain: SKErrorDomain, code: code.rawValue, userInfo: [ NSLocalizedDescriptionKey: description ])
-        return SKError(_nsError: error)
+        return SwiftySKError(_nsError: error)
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 extension SwiftyStoreKit {
 
     // MARK: Singleton
@@ -239,6 +259,7 @@ extension SwiftyStoreKit {
     }
 }
 
+@available(iOS 8, watchOS 6.2, *)
 extension SwiftyStoreKit {
 
     // MARK: Public methods - Receipt verification
